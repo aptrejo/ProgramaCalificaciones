@@ -1,0 +1,88 @@
+import java.util.Scanner;
+
+public class ProgramaCalificaciones {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        StringBuilder resultadosFinales = new StringBuilder();
+
+        do {
+            String nombreEstudiante = pedirNombre();
+            int[] calificaciones = pedirCalificaciones();
+            double promedio = calcularPromedio(calificaciones);
+            char calificacionFinal = obtenerCalificacionFinal(promedio);
+
+            imprimirResultados(nombreEstudiante, calificaciones, promedio, calificacionFinal, resultadosFinales);
+
+            System.out.print("¿Quieres repetir el proceso con otro estudiante? (Si/No): ");
+        } while (scanner.next().equalsIgnoreCase("Si"));
+
+        System.out.println("\nResultados finales:");
+        System.out.println(resultadosFinales.toString());
+        System.out.println("Gracias.");
+    }
+
+    // Método para pedir el nombre del estudiante
+    public static String pedirNombre() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Ingrese el nombre del estudiante: ");
+        return scanner.nextLine();
+    }
+
+    // Método para pedir las calificaciones al usuario
+    public static int[] pedirCalificaciones() {
+        Scanner scanner = new Scanner(System.in);
+        int[] calificaciones = new int[5];
+
+        System.out.println("Por favor, ingresa las 5 calificaciones:");
+
+        for (int i = 0; i < calificaciones.length; i++) {
+            System.out.print("Calificación " + (i + 1) + ": ");
+            calificaciones[i] = scanner.nextInt();
+        }
+
+        return calificaciones;
+    }
+
+    // Método para calcular el promedio de las calificaciones
+    public static double calcularPromedio(int[] calificaciones) {
+        int suma = 0;
+
+        for (int calificacion : calificaciones) {
+            suma += calificacion;
+        }
+
+        return (double) suma / calificaciones.length;
+    }
+
+    // Método para obtener la calificación final según la tabla
+    public static char obtenerCalificacionFinal(double promedio) {
+        if (promedio <= 50) {
+            return 'F';
+        } else if (promedio <= 60) {
+            return 'E';
+        } else if (promedio <= 70) {
+            return 'D';
+        } else if (promedio <= 80) {
+            return 'C';
+        } else if (promedio <= 90) {
+            return 'B';
+        } else {
+            return 'A';
+        }
+    }
+
+    // Método para imprimir los resultados
+    public static void imprimirResultados(String nombre, int[] calificaciones, double promedio, char calificacionFinal, StringBuilder resultadosFinales) {
+        System.out.println("\nResultados para el estudiante: " + nombre);
+        resultadosFinales.append("Nombre del estudiante: ").append(nombre).append("\n");
+        for (int i = 0; i < calificaciones.length; i++) {
+            System.out.println("Calificación " + (i + 1) + ": " + calificaciones[i]);
+        }
+        System.out.println("Promedio: " + promedio);
+        System.out.println("Calificación: " + calificacionFinal);
+        resultadosFinales.append("Promedio: ").append(promedio).append("\n");
+        resultadosFinales.append("Calificación: ").append(calificacionFinal).append("\n\n");
+    }
+}
